@@ -17,5 +17,11 @@ namespace CosmosAPI.Repository
             var response = await _container.CreateItemAsync(form, new PartitionKey(form.Id));
             return response;
         }
+
+        public async Task<Form> UpdateFormAsync(string id, Form form)
+        {
+            var response = await _container.UpsertItemAsync(form, new PartitionKey(id));
+            return response;
+        }
     }
 }

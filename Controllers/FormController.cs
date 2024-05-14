@@ -11,9 +11,9 @@ namespace CosmosAPI.Controllers
     {
         private readonly FormRepository _formRepository;
 
-        public FormController(FormRepository studentRepository)
+        public FormController(FormRepository formRepository)
         {
-            _formRepository = studentRepository;
+            _formRepository = formRepository;
         }
 
         [HttpPost]
@@ -21,6 +21,17 @@ namespace CosmosAPI.Controllers
         {
             var createdForm = await _formRepository.CreateFormAsync(form);            
             return createdForm;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Form>> Put(string id, [FromBody] Form form)
+        {
+            var updatedArticle = await _formRepository.UpdateFormAsync(id, form);
+            
+            if (updatedArticle == null)
+                return NotFound();
+
+            return updatedArticle;
         }
     }
 }
